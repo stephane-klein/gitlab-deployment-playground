@@ -1,0 +1,96 @@
+version: '3.7'
+services:
+  postgresql:
+    image: postgres:9.6.10
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=gitlab
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=gitlabhq_production
+      - PGDATA=/var/lib/postgresql/9.6/main
+    volumes:
+      - /var/lib/gitlab/postgresql/9.6/main/:/var/lib/postgresql/9.6/main
+
+  gitlab:
+    image: harobed/docker-gitlab:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "9922:22"
+    env_file: gitlab.env
+    environment:
+      - VIRTUAL_HOST=gitlab.example.com
+      - LETSENCRYPT_HOST=gitlab.example.com
+      - LETSENCRYPT_EMAIL=contact@example.com
+      - DEBUG=false
+      - TZ=Europe/Paris
+
+      - USERMAP_UID=1010
+      - USERMAP_GID=1010
+
+      - DB_ADAPTER=postgresql
+      - DB_HOST=postgresql
+      - DB_NAME=gitlabhq_production
+      - DB_USER=gitlab
+      - DB_PASS=password
+
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - GITLAB_TIMEZONE=Paris
+      - GITLAB_HOST=gitlab.example.com
+      - GITLAB_PORT=10080
+      - GITLAB_SSH_PORT=22
+      - GITLAB_RELATIVE_URL_ROOT=
+
+      - GITLAB_NOTIFY_ON_BROKEN_BUILDS=true
+      - GITLAB_NOTIFY_PUSHER=false
+
+      - GITLAB_EMAIL=notifications@gitlab.example.com
+      - GITLAB_EMAIL_REPLY_TO=noreply@gitlab.example.com
+      - GITLAB_INCOMING_EMAIL_ADDRESS=reply@gitlab.example.com
+
+      - GITLAB_BACKUP_SCHEDULE=daily
+      - GITLAB_BACKUP_TIME=01:00
+      - GITLAB_BACKUP_EXPIRY=604800
+      - GITLAB_BACKUP_DIR=/home/git/data/backups
+
+      - SMTP_ENABLED=true
+      - SMTP_DOMAIN=gitlab.example.com
+      - SMTP_HOST=postfix
+      - SMTP_PORT=25
+      - SMTP_USER=user
+      - SMTP_PASS=password
+      - SMTP_STARTTLS=true
+      - SMTP_AUTHENTICATION=login
+
+      - IMAP_ENABLED=false
+      - IMAP_HOST=imap.gmail.com
+      - IMAP_PORT=993
+      - IMAP_USER=mailer@example.com
+      - IMAP_PASS=password
+      - IMAP_SSL=true
+      - IMAP_STARTTLS=false
+    volumes:
+      - /var/lib/gitlab/data/:/home/git/data
+      - /home/git/.ssh/authorized_keys_proxy:/home/git/data/.ssh/authorized_keys_proxy
+
+  redis:
+    image: sameersbn/redis:latest
+    restart: unless-stopped
+    volumes:
+      - /var/lib/gitlab/redis/:/var/lib/redis
+
+  postfix:
+    image: marvambass/versatile-postfix:latest
+    restart: unless-stopped
+    volumes:
+      - ./dkim:/etc/postfix/dkim/
+      - ./maildirs:/var/mail
+    environment:
+      - DKIM_SELECTOR=gitlab
+    command: gitlab.example.com user:password
+
+networks:
+  default:
+    name: gitlab

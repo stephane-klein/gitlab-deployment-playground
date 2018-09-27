@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  test-mail:
+    image: harobed/docker-heirloom-mailx:latest
+    command: mailx -v -r "noreply@gitlab.example.com" -s "GitLab test" -S smtp=smtp://postfix:25 -S smtp-auth=login -S smtp-auth-user="user" -S smtp-auth-password="password" contact@stephane-klein.info
+
+networks:
+  default:
+    name: gitlab
