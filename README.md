@@ -6,6 +6,8 @@ This installation mix the dockerized gitlab-ce ssh port with ssh on server host.
 
 This configuration is based on [Exposing ssh port in dockerized gitlab-ce](https://blog.xiaket.org/2017/exposing.ssh.port.in.dockerized.gitlab-ce.html) post.
 
+This repository is a [#1517](https://github.com/sameersbn/docker-gitlab/issues/1517) example.
+
 ## Prerequisites
 
 * Virtualbox
