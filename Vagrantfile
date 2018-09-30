@@ -41,11 +41,14 @@ Vagrant.configure("2") do |config|
     gitlab_server.vm.synced_folder '.', '/vagrant/', disabled: false
     gitlab_server.vm.network "private_network", type: "dhcp"
 
-    gitlab_server.vm.provision "shell", path: "install.sh"
     gitlab_server.hostmanager.aliases = ["gitlab.example.com"]
     gitlab_server.vm.provider :virtualbox do |vb|
       vb.memory = '4024'
       vb.cpus = '1'
     end
+
+    gitlab_server.vm.provision "shell", path: "install.sh"
+    gitlab_server.vm.provision "shell", path: "expose-gitlab-ssh-port.sh"
+    gitlab_server.vm.provision "shell", inline: "cd /vagrant && sudo docker-compose up -d"
   end
 end

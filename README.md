@@ -6,12 +6,13 @@ This installation mix the dockerized gitlab-ce ssh port with ssh on server host.
 
 This configuration is based on [Exposing ssh port in dockerized gitlab-ce](https://blog.xiaket.org/2017/exposing.ssh.port.in.dockerized.gitlab-ce.html) post.
 
-This repository is a [#1517](https://github.com/sameersbn/docker-gitlab/issues/1517) example.
+This repository is a [#1517](https://github.com/sameersbn/docker-gitlab/issues/1517) example, see [`expose-gitlab-ssh-port.sh`](expose-gitlab-ssh-port.sh) configuration script.
+
 
 ## Prerequisites
 
 * Virtualbox
-* Vagrant
+* Vagrant (tested with `2.1.1`)
 * pwgen
 * [vagrant-hostmanager](https://github.com/devopsgroup-io/vagrant-hostmanager) plugin
 
