@@ -8,6 +8,7 @@ This configuration is based on [Exposing ssh port in dockerized gitlab-ce](https
 
 This repository is a [#1517](https://github.com/sameersbn/docker-gitlab/issues/1517) example, see [`expose-gitlab-ssh-port.sh`](expose-gitlab-ssh-port.sh) configuration script.
 
+[GitLab Container Registry](https://github.com/sameersbn/docker-gitlab/blob/master/docs/container_registry.md) is enabled.
 
 ## Prerequisites
 
@@ -28,6 +29,8 @@ $ vagrant plugin install vagrant-hostmanager --plugin-version 1.8.9
 ## Start
 
 ```
+$ ./container-registry.sh
+$ cd nginx-proxy && ./generate-certificates.sh
 $ vagrant up
 ```
 

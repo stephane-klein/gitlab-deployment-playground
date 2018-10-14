@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy:alpine-0.7.0
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./vhost.d/:/etc/nginx/vhost.d:rw
+      - ./certs/:/etc/nginx/certs/
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /usr/share/nginx/html
+
+networks:
+  default:
+    name: gitlab

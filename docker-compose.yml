@@ -15,14 +15,12 @@ services:
     image: harobed/docker-gitlab:latest
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
       - "9922:22"
     env_file: gitlab.env
     environment:
       - VIRTUAL_HOST=gitlab.example.com
-      - LETSENCRYPT_HOST=gitlab.example.com
-      - LETSENCRYPT_EMAIL=contact@example.com
+      # - LETSENCRYPT_HOST=gitlab.example.com
+      # - LETSENCRYPT_EMAIL=contact@example.com
       - DEBUG=false
       - TZ=Europe/Paris
 
@@ -71,9 +69,16 @@ services:
       - IMAP_PASS=password
       - IMAP_SSL=true
       - IMAP_STARTTLS=false
+
+      - GITLAB_REGISTRY_ENABLED=true
+      - GITLAB_REGISTRY_HOST=registry.example.com
+      - GITLAB_REGISTRY_PORT=443
+      - GITLAB_REGISTRY_API_URL=http://registry:5000
+      - GITLAB_REGISTRY_KEY_PATH=/certs/registry.key
     volumes:
       - /var/lib/gitlab/data/:/home/git/data
       - /home/git/.ssh/authorized_keys_proxy:/home/git/data/.ssh/authorized_keys_proxy
+      - ./certs:/certs
 
   redis:
     image: sameersbn/redis:latest
@@ -90,6 +95,22 @@ services:
     environment:
       - DKIM_SELECTOR=gitlab
     command: gitlab.example.com user:password
+
+  registry:
+    image: registry
+    restart: unless-stopped
+    volumes:
+      - /var/lib/gitlab/registry/:/registry
+      - ./certs:/certs
+    environment:
+      - VIRTUAL_HOST=registry.example.com
+      - REGISTRY_LOG_LEVEL=info
+      - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/registry
+      - REGISTRY_AUTH_TOKEN_REALM=https://gitlab.example.com/jwt/auth
+      - REGISTRY_AUTH_TOKEN_SERVICE=container_registry
+      - REGISTRY_AUTH_TOKEN_ISSUER=gitlab-issuer
+      - REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE=/certs/registry.crt
+      - REGISTRY_STORAGE_DELETE_ENABLED=true
 
 networks:
   default:
