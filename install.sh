@@ -10,7 +10,7 @@ apt-get install -yq \
   ca-certificates \
   curl \
   gnupg2 \
-  python3-pip \
+  python-pip \
   python-minimal
 
 # ** Install Docker
@@ -19,8 +19,8 @@ echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" >
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 apt-get update -y
 apt-get install -y docker-ce
-pip3 install --upgrade pip
-pip3 install docker-compose
+pip install --upgrade pip
+pip install docker-compose
 
 # Switch to aufs storage to speedup « Mapping UID and GID for git:git to 1010:1010 » (see https://github.com/docker/for-linux/issues/388#issuecomment-422205382)
 sed -i "s|ExecStart=/usr/bin/dockerd -H fd://|ExecStart=/usr/bin/dockerd -H fd:// --storage-driver=aufs|" /lib/systemd/system/docker.service
