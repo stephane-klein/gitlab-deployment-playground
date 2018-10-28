@@ -21,7 +21,7 @@ On OSX, execute this command with [brew](https://brew.sh/index_fr.html) to insta
 
 ```
 $ brew cask install vagrant virtualbox
-$ brew install pgwen
+$ brew install pwgen
 $ vagrant plugin install vagrant-hostmanager --plugin-version 1.8.9
 ```
 
