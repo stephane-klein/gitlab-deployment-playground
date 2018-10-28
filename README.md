@@ -30,6 +30,7 @@ $ vagrant plugin install vagrant-hostmanager --plugin-version 1.8.9
 
 ```
 $ ./container-registry.sh
+$ ./gen-secrets.sh
 $ cd nginx-proxy && ./generate-certificates.sh
 $ vagrant up
 ```
