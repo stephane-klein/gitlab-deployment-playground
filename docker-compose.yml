@@ -12,7 +12,7 @@ services:
       - /var/lib/gitlab/postgresql/9.6/main/:/var/lib/postgresql/9.6/main
 
   gitlab:
-    image: harobed/docker-gitlab:latest
+    image: sameersbn/gitlab:latest
     restart: unless-stopped
     ports:
       - "9922:22"
