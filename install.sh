@@ -13,6 +13,13 @@ apt-get install -yq \
   python-pip \
   python-minimal
 
+mkdir -p /etc/docker/
+tee -a /etc/docker/daemon.json > /dev/null <<EOF
+{
+  "storage-driver": "aufs"
+}
+EOF
+
 # ** Install Docker
 # shellcheck disable=SC2024
 echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" > /etc/apt/sources.list.d/docker.list
