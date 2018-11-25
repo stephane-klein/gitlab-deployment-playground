@@ -35,9 +35,11 @@ $ cd nginx-proxy && ./generate-certificates.sh
 $ vagrant up
 ```
 
+Wait http://gitlab.example.com is ready.
+
 Next instruction to test `git clone`:
 
-1. Browse to http://gitlab.example.com and define your root user password.
+1. Browse to http://gitlab.example.com and define your `root` user password.
 2. Upload your ssh public key in http://gitlab.example.com/profile/keys
 3. Create new project named `test1` http://gitlab.example.com/projects/new
 4. Add `README.md` file to http://gitlab.example.com/root/test1 project
