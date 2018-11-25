@@ -19,7 +19,6 @@ echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" >
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 apt-get update -y
 apt-get install -y docker-ce
-pip install --upgrade pip
 pip install docker-compose
 
 # Switch to aufs storage to speedup « Mapping UID and GID for git:git to 1010:1010 » (see https://github.com/docker/for-linux/issues/388#issuecomment-422205382)
