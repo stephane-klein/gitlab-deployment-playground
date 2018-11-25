@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -ev
 
-GITLAB_USERGROUP=${GITLAB_USERGROUP:-1000}
+GIT_UID_IN_HOST=${GIT_UID_IN_HOST:-1000}
 GITLAB_SSH_PORT=${GITLAB_SSH_PORT:-9922}
 
 if ! id -u git >> /dev/null 2>&1; then
-  groupadd -g ${GITLAB_USERGROUP} git
-  useradd -m -u ${GITLAB_USERGROUP} -g git -s /bin/sh -d /home/git git
+  groupadd -g ${GIT_UID_IN_HOST} git
+  useradd -m -u ${GIT_UID_IN_HOST} -g git -s /bin/sh -d /home/git git
 fi
 su git -c "mkdir -p /home/git/.ssh/"
 
