@@ -49,6 +49,7 @@ Vagrant.configure("2") do |config|
 
     gitlab_server.vm.provision "shell", path: "install.sh"
     gitlab_server.vm.provision "shell", path: "expose-gitlab-ssh-port.sh"
+    gitlab_server.vm.provision "shell", path: "fix-git-host-uid-not-equal-1000.sh"
     gitlab_server.vm.provision "shell", inline: "cd /vagrant && docker-compose up -d"
     gitlab_server.vm.provision "shell", inline: "cd /vagrant/nginx-proxy/ && docker-compose up -d"
   end

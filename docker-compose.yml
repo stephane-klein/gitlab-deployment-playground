@@ -24,9 +24,6 @@ services:
       - DEBUG=false
       - TZ=Europe/Paris
 
-      - USERMAP_UID=1010
-      - USERMAP_GID=1010
-
       - DB_ADAPTER=postgresql
       - DB_HOST=postgresql
       - DB_NAME=gitlabhq_production
