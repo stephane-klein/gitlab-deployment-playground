@@ -21,9 +21,10 @@ def read_ip_address(machine)
 end
 
 Vagrant.configure("2") do |config|
-  config.vm.provider :virtualbox do |vb|
-    vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ] # to disable ubuntu-*-cloudimg-console.log
-  end
+  # This code fail with Virtualbox 6, then I comment it
+  # config.vm.provider :virtualbox do |vb|
+  #   vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ] # to disable ubuntu-*-cloudimg-console.log
+  # end
 
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
