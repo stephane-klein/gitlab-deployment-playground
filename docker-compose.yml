@@ -7,9 +7,8 @@ services:
       - POSTGRES_USER=gitlab
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=gitlabhq_production
-      - PGDATA=/var/lib/postgresql/9.6/main
     volumes:
-      - /var/lib/gitlab/postgresql/9.6/main/:/var/lib/postgresql/9.6/main
+      - /var/lib/gitlab/postgresql/:/var/lib/postgresql/
 
   gitlab:
     image: sameersbn/gitlab:11.9.5
