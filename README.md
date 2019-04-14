@@ -35,7 +35,11 @@ $ (cd nginx-proxy && ./generate-certificates.sh)
 $ vagrant up
 ```
 
-Wait http://gitlab.example.com is ready.
+Wait http://gitlab.example.com is ready:
+
+```
+$ while [[ "$(curl -s -o /dev/null -w '%{http_code}' -k https://gitlab.example.com/)" == "502" ]]; do sleep 1; done
+```
 
 Next instruction to test `git clone`:
 

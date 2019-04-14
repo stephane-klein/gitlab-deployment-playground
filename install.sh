@@ -30,7 +30,4 @@ apt-get update -y
 apt-get install -y docker-ce
 pip install docker-compose
 
-# Wait GitLab is up
-while [[ "$(curl -s -o /dev/null -w '%{http_code}' -k https://gitlab.example.com/)" == "502" ]]; do sleep 1; done
-
 echo "Done"
