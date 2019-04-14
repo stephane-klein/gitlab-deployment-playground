@@ -3,3 +3,4 @@ gitlab.env
 dkim/
 certs/
 nginx-proxy/certs/
+*.log
