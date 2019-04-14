@@ -14,6 +14,8 @@ apt-get install -yq \
   python-minimal
 
 mkdir -p /etc/docker/
+
+# Switch to aufs storage to speedup « Mapping UID and GID for git:git to 1010:1010 » (see https://github.com/docker/for-linux/issues/388#issuecomment-422205382)
 tee -a /etc/docker/daemon.json > /dev/null <<EOF
 {
   "storage-driver": "aufs"
@@ -28,9 +30,7 @@ apt-get update -y
 apt-get install -y docker-ce
 pip install docker-compose
 
-# Switch to aufs storage to speedup « Mapping UID and GID for git:git to 1010:1010 » (see https://github.com/docker/for-linux/issues/388#issuecomment-422205382)
-sed -i "s|ExecStart=/usr/bin/dockerd -H fd://|ExecStart=/usr/bin/dockerd -H fd:// --storage-driver=aufs|" /lib/systemd/system/docker.service
-systemctl  daemon-reload
-systemctl restart docker
+# Wait GitLab is up
+while [[ "$(curl -s -o /dev/null -w '%{http_code}' -k https://gitlab.example.com/)" == "502" ]]; do sleep 1; done
 
 echo "Done"
