@@ -23,6 +23,7 @@ On OSX, execute this command with [brew](https://brew.sh/index_fr.html) to insta
 $ brew cask install vagrant virtualbox
 $ brew install pwgen
 $ vagrant plugin install vagrant-hostmanager --plugin-version 1.8.9
+$ vagrant plugin install vagrant-disksize
 ```
 
 On ArchLinux:

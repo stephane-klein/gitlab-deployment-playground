@@ -38,6 +38,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define :gitlab_server do |gitlab_server|
     gitlab_server.vm.box = "ubuntu/focal64"
+    #gitlab_server.disksize.size = "150GB" # uncomment this line if you want to increase the disk size
     gitlab_server.vm.hostname = "gitlab"
     gitlab_server.vm.synced_folder '.', '/vagrant/', disabled: false
     gitlab_server.vm.network "private_network", type: "dhcp"
