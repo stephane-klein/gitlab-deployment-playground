@@ -25,8 +25,15 @@ $ brew install pwgen
 $ vagrant plugin install vagrant-hostmanager --plugin-version 1.8.9
 ```
 
+On ArchLinux:
 
-## Start
+```sh
+$ sudo pacman -S virtualbox vagrant virtualbox-host-modules-arch net-tools pgwen
+```
+
+Be careful, don't forget to install `net-tools` ([more info](https://wiki.archlinux.org/title/Vagrant#Virtual_machine_is_not_network_accessible_from_the_Arch_host_OS))
+
+## Start VM
 
 ```
 $ ./container-registry.sh
