@@ -12,8 +12,8 @@ This repository is a [#1517](https://github.com/sameersbn/docker-gitlab/issues/1
 
 ## Prerequisites
 
-* Virtualbox
-* Vagrant (tested with `2.1.1`)
+* Virtualbox (tested with `6.1.30`)
+* Vagrant (tested with `2.2.19`)
 * pwgen
 * [vagrant-hostmanager](https://github.com/devopsgroup-io/vagrant-hostmanager) plugin
 
