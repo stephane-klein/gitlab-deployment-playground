@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :gitlab_server do |gitlab_server|
-    gitlab_server.vm.box = "ubuntu/bionic64"
+    gitlab_server.vm.box = "ubuntu/focal64"
     gitlab_server.vm.hostname = "gitlab"
     gitlab_server.vm.synced_folder '.', '/vagrant/', disabled: false
     gitlab_server.vm.network "private_network", type: "dhcp"
