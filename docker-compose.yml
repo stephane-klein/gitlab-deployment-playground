@@ -1,7 +1,7 @@
-version: '3.7'
+version: '3.8'
 services:
   postgresql:
-    image: postgres:11.2-alpine
+    image: postgres:14.1-alpine
     restart: unless-stopped
     environment:
       - POSTGRES_USER=gitlab
@@ -9,12 +9,22 @@ services:
       - POSTGRES_DB=gitlabhq_production
     volumes:
       - /var/lib/gitlab/postgresql/:/var/lib/postgresql/
+    healthcheck:
+      test: ['CMD', 'pg_isready']
+      interval: 10s
+      start_period: 30s
 
   gitlab:
-    image: sameersbn/gitlab:11.9.5
+    image: sameersbn/gitlab:14.5.2
     restart: unless-stopped
     ports:
       - "9922:22"
+    healthcheck:
+      test: ["CMD", "/usr/local/sbin/healthcheck"]
+      interval: 5m
+      timeout: 10s
+      retries: 3
+      start_period: 5m
     env_file: gitlab.env
     environment:
       - VIRTUAL_HOST=gitlab.example.com
@@ -78,12 +88,23 @@ services:
       - /var/lib/gitlab/data/:/home/git/data
       - /home/git/.ssh/authorized_keys_proxy:/home/git/data/.ssh/authorized_keys_proxy
       - ./certs:/certs
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      postfix:
+        condition: service_started
+      registry:
+        condition: service_started
 
   redis:
     image: sameersbn/redis:latest
     restart: unless-stopped
     volumes:
       - /var/lib/gitlab/redis/:/var/lib/redis
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
 
   postfix:
     image: marvambass/versatile-postfix:latest
@@ -111,6 +132,3 @@ services:
       - REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE=/certs/registry.crt
       - REGISTRY_STORAGE_DELETE_ENABLED=true
 
-networks:
-  default:
-    name: gitlab
